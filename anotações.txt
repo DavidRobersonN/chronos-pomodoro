@@ -1,0 +1,2 @@
+local da chave keygen.exe
+cat C:\Users\david/.ssh/id_ed25519.pub
