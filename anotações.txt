@@ -1,5 +1,17 @@
-local da chave keygen.exe
+  local da chave keygen.exe
 cat C:\Users\david/.ssh/id_ed25519.pub
 
+
+  Anotações sobre o GitHub
 Comando para limpar todas alterações feitas apos o ultimo commit
   git reset --hard
+
+
+  Anotações
+O arquivo Principal que é chamado para renderizar a pagina, é o index.html, 
+neste exercicio, nossa app sera single page, ou seja apenas com uma pagina.
+
+o arquivo main.tsx renderiza o primeiro o componente do nosso app, no nosso caso
+inicial, estamos chamado o componente <App />
+O componente é basicamente uma funlççao ou classe, que retorna um arquivo jsx
+ele é exportado no seu arquivo, e importado no arquivo main.tsx.
