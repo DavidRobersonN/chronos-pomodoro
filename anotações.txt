@@ -1,2 +1,5 @@
 local da chave keygen.exe
 cat C:\Users\david/.ssh/id_ed25519.pub
+
+Comando para limpar todas alterações feitas apos o ultimo commit
+  git reset --hard
