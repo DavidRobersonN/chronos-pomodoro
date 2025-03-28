@@ -1,30 +1,28 @@
-.Logo {
+.Menu {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 2.4rem;
-  padding-top: 3.2rem;
+  gap: 1.6rem;
 }
 
-.logoLink {
-  display: flex;
-  flex-direction: column;
+.menuLink {
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-weight: bold;
-  gap: 0.01rem;
-  font-size: 4.2rem;
   text-decoration: none;
-  color: var(--primary);
+  background: var(--primary);
+  color: var(--text-over-primary);
   transition: all 0.1s ease-in-out;
+  padding: 1.2rem;
+  border-radius: 0.8rem;
 }
 
-.logoLink:hover {
+.menuLink:hover {
   filter: brightness(80%);
 }
 
-.logoLink svg {
+.menuLink svg {
   /*O icone que foi gerado, é transformado em svg, para aplicar css nela basta colocar a classe que estamos usando + svg*/
-  width: 6.4rem;
-  height: 6.4rem;
+  width: 2.4rem;
+  height: 2.4rem;
 }
