@@ -1,18 +1,25 @@
-import { Heading } from './components/Heading';
 import './styles/theme.css';
 import './styles/global.css';
-
+import { Container } from './components/Container';
+import { Heading } from './components/Heading';
 export function App() {
-  console.log('Oi');
   return (
     <>
-      <Heading attr={123}>Hello Word 1</Heading>
-      <p>
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptate
-        minima itaque animi veritatis nesciunt adipisci a inventore, soluta
-        possimus exercitationem recusandae asperiores laborum eveniet quis,
-        assumenda excepturi vitae molestias placeat.
-      </p>
+      <Container>
+        <Heading>LOGO</Heading>
+      </Container>
+
+      <Container>
+        <section>MENU</section>
+      </Container>
+
+      <Container>
+        <section>TEXT</section>
+      </Container>
+
+      <Container>
+        <section>FOOTER</section>
+      </Container>
     </>
   );
 }
