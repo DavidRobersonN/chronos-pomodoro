@@ -1,12 +1,21 @@
+import styles from './styles.module.css';
+
 type DefaultInputProps = {
   id: string; // Forçando utilizar uma string
-} & React.ComponentProps<'input'>; // capturando os tipos padroes do React, para que eu possa utilizar no meu app.tsx dentro do input
+  labelText?: string; //a interrogação significa que o label é opcional
+} & React.ComponentProps<'input'>; // capturando os tipos padrões do React, para que eu possa utilizar no meu app.tsx dentro do input
 
-export function DefaultInput({ id, type }: DefaultInputProps) {
+export function DefaultInput({
+  labelText,
+  id,
+  type,
+  ...rest //para poder utilizar qualquer opção do input
+}: DefaultInputProps) {
   return (
     <>
-      <label htmlFor={id}>task</label>
-      <input id={id} type={type} />
+      {/* se  houver label "&&", carregue o label*/}
+      {labelText && <label htmlFor={id}>{labelText}</label>}
+      <input className={styles.input} id={id} type={type} {...rest} />
     </>
   );
 }

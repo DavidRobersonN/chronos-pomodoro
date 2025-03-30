@@ -4,7 +4,7 @@ cat C:\Users\david/.ssh/id_ed25519.pub
 Para desabilitar a politica do power shell
   Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
 
-
+Para comentar dentro de jsx ctrl + / na linha selecionada
 
   Anotações sobre o GitHub
 Comando para limpar todas alterações feitas apos o ultimo commit
