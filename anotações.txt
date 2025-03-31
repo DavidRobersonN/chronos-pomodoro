@@ -22,3 +22,6 @@ ele é exportado no seu arquivo, e importado no arquivo main.tsx.
 
   PROPS
   As props sao elementos que os componentes podem receber
+
+  HOOKS
+  Todos as funcoes que comecam com use, por exemplo useState(); e um hook do React
