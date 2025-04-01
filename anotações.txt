@@ -1,6 +1,9 @@
   local da chave keygen.exe
 cat C:\Users\david/.ssh/id_ed25519.pub
 
+comando para instalar os pacotes de package.json "npm install"
+comando para rodar o app "npm run dev"
+
 Para desabilitar a politica do power shell
   Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
 
