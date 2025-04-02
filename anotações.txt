@@ -25,3 +25,22 @@ ele é exportado no seu arquivo, e importado no arquivo main.tsx.
 
   HOOKS
   Todos as funcoes que comecam com use, por exemplo useState(); e um hook do React
+  Ao trabalharmos com hooks, podemos nos deparar com efeitos colaterais.. entao utilizamos useEffect
+    Exemplo de useEffect:
+
+      // Executado todas as vezes que o componente renderiza na tela
+      useEffect(() => {
+        console.log('useEffect sem depencias', Date.now());
+      }); 
+
+
+      //Executado apenas quando o react monta o componente na tela pela primeira vez
+      useEffect(() => {
+        console.log('useEffect com ARRAY dependencias VAZIO', Date.now());
+      }, []); //sem passar dependencias
+
+
+      //Executa apenas quando o valor de theme muda
+      useEffect(() => {
+        console.log('useEffect COM ARRAY de dependencias', Date.now());
+      }, [theme]);
