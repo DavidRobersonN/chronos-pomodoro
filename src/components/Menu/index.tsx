@@ -1,4 +1,10 @@
-import { HistoryIcon, HouseIcon, SettingsIcon, SunIcon } from 'lucide-react'; // Lucide, biblioteca de ícones
+import {
+  HistoryIcon,
+  HouseIcon,
+  MoonIcon,
+  SettingsIcon,
+  SunIcon,
+} from 'lucide-react'; // Lucide, biblioteca de ícones
 import styles from './styles.module.css';
 import { useState, useEffect } from 'react';
 
@@ -6,7 +12,19 @@ import { useState, useEffect } from 'react';
 type AvailableThemes = 'dark' | 'light';
 
 export function Menu() {
-  const [theme, setTheme] = useState<AvailableThemes>('dark'); // Passando para o useState os meus valores pre-definidos.. e deixando como padrão Dark
+  //Passando para useState minhas opções de temas padrões dark ou light
+  const [theme, setTheme] = useState<AvailableThemes>(() => {
+    //Dentro de storageTheme buscamos com .getItem o valor theme
+    const storageTheme = //Utilizando 'as' estamos forçando usar nossas opções de temas, ou dark, caso nao tenha valor na chave theme, por exemplo se for a primeira busca na pagina
+      (localStorage.getItem('theme') as AvailableThemes) || 'dark';
+    return storageTheme;
+  });
+
+  // constante que guarda os ícones que serão chamados pela chave dark ou light
+  const nextThemeIcon = {
+    dark: <SunIcon />,
+    light: <MoonIcon />,
+  };
 
   //função para fazer a troca do tema
   function handleThemeChange(
@@ -23,6 +41,7 @@ export function Menu() {
   //para resolver o efeito colateral, utilizamos useEffect, para atualizar o valor de theme dentro da pagina
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme); //Aqui esta acontecendo que, estamos buscando no html utilizando localStorage.setItem, a chave 'theme', e mudando o valor dela para theme, que vem lá de useState
   }, [theme]); // essa função fica monitorando o valor de theme, e só é executada quando theme é alterado
 
   return (
@@ -58,7 +77,8 @@ export function Menu() {
         title='Mudar Tema'
         onClick={handleThemeChange} // Nossa função de hooks useState, juntamento com  useEffect alterando o valor de theme
       >
-        <SunIcon />
+        {/* escolhendo qual ícone vai aparecer, dependendo da chave que for passado, dark ou light */}
+        {nextThemeIcon[theme]}
       </a>
     </nav>
   );
