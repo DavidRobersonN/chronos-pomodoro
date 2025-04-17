@@ -8,12 +8,15 @@ Para desabilitar a politica do power shell Set-ExecutionPolicy -Scope Process
 
 Para comentar dentro de jsx ctrl + / na linha selecionada
 
-Anotações sobre o GitHub Comando para limpar todas alterações feitas apos o
-ultimo commit git reset --hard
+# Anotações sobre o GitHub
 
-Anotações O arquivo Principal que é chamado para renderizar a pagina, é o
-index.html, neste exercicio, nossa app sera single page, ou seja apenas com uma
-pagina.
+Comando para limpar todas alterações feitas apos o ultimo commit git reset
+--hard
+
+# Anotações
+
+O arquivo Principal que é chamado para renderizar a pagina, é o index.html,
+neste exercicio, nossa app sera single page, ou seja apenas com uma pagina.
 
 o arquivo main.tsx renderiza o primeiro componente do nosso app, no nosso caso
 inicial, estamos chamado o componente <App /> O componente é basicamente uma
