@@ -6,18 +6,25 @@ import { useRef } from 'react';
 import { TaskModel } from '../../models/TaskModel';
 import { useTaskContext } from '../../contexts/TaskContent/useTaskContext';
 import { getNextCycle } from '../../util/getNextCycle';
+import { getNextCycleType } from '../../util/getNextCycleType';
 
 export function MainForm() {
   const { state, setState } = useTaskContext();
   const taskNameInput = useRef<HTMLInputElement>(null);
 
-  //Ciclos... utiliza a função que criamos para configurar o proximo ciclo, com
-  //  base no atual
+  //Ciclos...
+  //NextCycleType é um numero de um a 8, com base no ciclo
+  //getCycleType é uma função que configura o proximo ciclo
   const nextCycle = getNextCycle(state.currentCycle);
+  //getNextCycleType utiliza o nextCycle, para definir no state o nextCycleType
+  //nextCycleType: "workTime" | "shortBreakTime" | "longBreakTime"
+  const nextCycleType = getNextCycleType(nextCycle);
 
+  //Capturando o evento de submeter o formulário
   function handleCreateNewTask(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
+    //Se o campo input for vazio null... return
     if (taskNameInput.current === null) return;
 
     //Dentro de taskName, estamos colocando o que capturamos com o useRef
@@ -39,16 +46,17 @@ export function MainForm() {
       startDate: Date.now(),
       completeDate: null,
       interruptDate: null,
-      duration: 1, //Depois vai vir do estado
-      type: 'workTime', //Depois vai vir do estado
+      duration: state.config[nextCycleType],
+      type: nextCycleType, //proximo "workTime" | "shortBreakTime" | "longBreakTime"
     };
 
     const secondsRemaining = newTask.duration * 60;
 
+    //Agora que a task foi criada, precisamos guardar ela no array de tasks
     setState(prevState => {
       return {
-        ...prevState, // Copiando os dados antigo
-        config: { ...prevState.config },
+        ...prevState, // Copiando os dados antigos
+        config: { ...prevState.config }, //Copiando para garantir o tipo da task
         activeTask: newTask,
         currentCycle: nextCycle,
         secondsRemaining, //Conferir
