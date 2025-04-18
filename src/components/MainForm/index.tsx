@@ -7,6 +7,7 @@ import { TaskModel } from '../../models/TaskModel';
 import { useTaskContext } from '../../contexts/TaskContent/useTaskContext';
 import { getNextCycle } from '../../util/getNextCycle';
 import { getNextCycleType } from '../../util/getNextCycleType';
+import { formatSecondsToMinutes } from '../../util/formatSecondsToMinutes';
 
 export function MainForm() {
   const { state, setState } = useTaskContext();
@@ -57,10 +58,11 @@ export function MainForm() {
       return {
         ...prevState, // Copiando os dados antigos
         config: { ...prevState.config }, //Copiando para garantir o tipo da task
+        //Acrescentando a nova task que foi criada, dentro do nosso array de tasks
         activeTask: newTask,
         currentCycle: nextCycle,
-        secondsRemaining, //Conferir
-        formattedSecondsRemaining: '00:00',
+        secondsRemaining: secondsRemaining,
+        formattedSecondsRemaining: formatSecondsToMinutes(secondsRemaining),
         //Copiando a task anterior, e adicionando a nova que criamos
         tasks: [...prevState.tasks, newTask],
       };
