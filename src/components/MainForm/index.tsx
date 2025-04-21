@@ -1,4 +1,4 @@
-import { PlayCircleIcon } from 'lucide-react';
+import { PlayCircleIcon, StopCircleIcon } from 'lucide-react';
 import { Cycles } from '../Cycles';
 import { DefaultButton } from '../DefaultButton';
 import { DefaultInput } from '../DefaultInput';
@@ -69,6 +69,31 @@ export function MainForm() {
     });
   }
 
+  function handleInterruptTask(
+    //Utilizei esse preventDefault para nao deixar enviar o formulario, caso o
+    //React confunda os botoes
+    //Para resolver, poderia em vez de usar o if ternário... e então colocar dois &&
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+  ) {
+    e.preventDefault();
+
+    setState(prevState => {
+      return {
+        ...prevState,
+        activeTask: null,
+        secondsRemaining: 0,
+        formattedSecondsRemaining: '00:00',
+        tasks: prevState.tasks.map(task => {
+          //Se o primeiro elemento existir e o segundo for verdadeiro
+          if (prevState.activeTask && prevState.activeTask.id === task.id) {
+            return { ...task, interruptDate: Date.now() };
+          }
+          return task;
+        }),
+      };
+    });
+  }
+
   return (
     <form onSubmit={handleCreateNewTask} className='form' action=''>
       <div className='formRow'>
@@ -78,6 +103,7 @@ export function MainForm() {
           labelText='task'
           placeholder='Digite algo'
           ref={taskNameInput} //Referencia para useRef
+          disabled={!!state.activeTask}
         />
       </div>
 
@@ -93,7 +119,24 @@ export function MainForm() {
       )}
 
       <div className='formRow'>
-        <DefaultButton icon={<PlayCircleIcon />} />
+        {!state.activeTask ? (
+          <DefaultButton
+            aria-label='Iniciar nova tarefa'
+            title='Iniciar nova tarefa'
+            type='submit'
+            icon={<PlayCircleIcon />}
+          />
+        ) : (
+          <DefaultButton
+            aria-label='Interromper tarefa Atual'
+            title='Interromper tarefa Atual'
+            type='button'
+            color='red'
+            icon={<StopCircleIcon />}
+            //Passamos a funcao que criamos para onClick, que vai ser executado quando o botao for clicado
+            onClick={handleInterruptTask}
+          />
+        )}
       </div>
     </form>
   );
