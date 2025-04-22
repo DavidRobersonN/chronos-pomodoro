@@ -7,10 +7,11 @@ import { TaskModel } from '../../models/TaskModel';
 import { useTaskContext } from '../../contexts/TaskContent/useTaskContext';
 import { getNextCycle } from '../../util/getNextCycle';
 import { getNextCycleType } from '../../util/getNextCycleType';
-import { formatSecondsToMinutes } from '../../util/formatSecondsToMinutes';
+import { TaskActionTypes } from '../../contexts/TaskContent/taskActions';
+//import { formatSecondsToMinutes } from '../../util/formatSecondsToMinutes';
 
 export function MainForm() {
-  const { state, setState } = useTaskContext();
+  const { state, dispatch } = useTaskContext();
   const taskNameInput = useRef<HTMLInputElement>(null);
 
   //Ciclos...
@@ -40,9 +41,7 @@ export function MainForm() {
     }
     //Se tudo bem, Essa sera a nova task que sera criada
     const newTask: TaskModel = {
-      //Apenas para gerar um dado único, para ser o id
       id: Date.now().toString(),
-      // O nome da task, sera o que estiver dentro do input
       name: taskName,
       startDate: Date.now(),
       completeDate: null,
@@ -51,22 +50,7 @@ export function MainForm() {
       type: nextCycleType, //proximo "workTime" | "shortBreakTime" | "longBreakTime"
     };
 
-    const secondsRemaining = newTask.duration * 60;
-
-    //Agora que a task foi criada, precisamos guardar ela no array de tasks
-    setState(prevState => {
-      return {
-        ...prevState, // Copiando os dados antigos
-        config: { ...prevState.config }, //Copiando para garantir o tipo da task
-        //Acrescentando a nova task que foi criada, dentro do nosso array de tasks
-        activeTask: newTask,
-        currentCycle: nextCycle,
-        secondsRemaining: secondsRemaining,
-        formattedSecondsRemaining: formatSecondsToMinutes(secondsRemaining),
-        //Copiando a task anterior, e adicionando a nova que criamos
-        tasks: [...prevState.tasks, newTask],
-      };
-    });
+    dispatch({ type: TaskActionTypes.START_TASK, payload: newTask });
   }
 
   function handleInterruptTask(
@@ -77,21 +61,21 @@ export function MainForm() {
   ) {
     e.preventDefault();
 
-    setState(prevState => {
-      return {
-        ...prevState,
-        activeTask: null,
-        secondsRemaining: 0,
-        formattedSecondsRemaining: '00:00',
-        tasks: prevState.tasks.map(task => {
-          //Se o primeiro elemento existir e o segundo for verdadeiro
-          if (prevState.activeTask && prevState.activeTask.id === task.id) {
-            return { ...task, interruptDate: Date.now() };
-          }
-          return task;
-        }),
-      };
-    });
+    // setState(prevState => {
+    //   return {
+    //     ...prevState,
+    //     activeTask: null,
+    //     secondsRemaining: 0,
+    //     formattedSecondsRemaining: '00:00',
+    //     tasks: prevState.tasks.map(task => {
+    //       //Se o primeiro elemento existir e o segundo for verdadeiro
+    //       if (prevState.activeTask && prevState.activeTask.id === task.id) {
+    //         return { ...task, interruptDate: Date.now() };
+    //       }
+    //       return task;
+    //     }),
+    //   };
+    // });
   }
 
   return (
