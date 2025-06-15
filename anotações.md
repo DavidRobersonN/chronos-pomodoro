@@ -176,3 +176,96 @@ const [myState, dispatch] = useReducer(
 ```
   o useReducer, recebe o estado, e uma ação, e retorna um novo Estado com base na
 ação que foi passado
+
+
+# 🧠 Resumo Aula 72 — Web Workers
+✅ O que são Web Workers?
+Web Workers são scripts que rodam em segundo plano no navegador, em uma thread separada da thread principal (que cuida da interface gráfica e eventos do usuário).
+
+Eles permitem executar tarefas pesadas (como cálculos, loops, timers) sem travar ou bloquear a interface da aplicação.
+
+🔧 Implementação na aula:
+📄 Arquivo: timeWorker.js
+Criamos um arquivo na raiz do projeto chamado timeWorker.js.
+
+Dentro dele, usamos o evento:
+
+javascript
+Copiar
+Editar
+self.onmessage = function (event) {
+  // Código aqui
+};
+Dentro dessa função, criamos uma função recursiva que funciona como um cronômetro, executando uma ação a cada segundo.
+
+O Worker possui seu próprio contexto e não tem acesso direto ao DOM, mas pode se comunicar com a thread principal por meio de postMessage() (envia dados) e onmessage (recebe dados).
+
+🏗️ Gerenciamento do Worker
+Criamos o arquivo TimerWorkerManager.ts, responsável por gerenciar o Worker usando o padrão de projeto Singleton, ou seja, garantindo que exista apenas uma única instância do Worker ativa no sistema.
+
+🔥 Código da classe:
+javascript
+Copiar
+Editar
+let instance: TimerWorkerManager | null = null;
+
+export class TimerWorkerManager {
+  private worker: Worker;
+
+  // 🔒 Construtor privado impede criação de múltiplas instâncias
+  private constructor() {
+    this.worker = new Worker(new URL('./timeWorker.js', import.meta.url));
+  }
+
+  // 🔥 Método estático que garante uma única instância (Singleton)
+  static getInstance() {
+    if (!instance) {
+      instance = new TimerWorkerManager();
+    }
+    return instance;
+  }
+
+  // 📤 Envia dados para o Worker
+  postMessage(message: any) {
+    this.worker.postMessage(message);
+  }
+
+  // 📥 Escuta mensagens vindas do Worker
+  onmessage(callback: (e: MessageEvent) => void) {
+    this.worker.onmessage = callback;
+  }
+
+  // 🛑 Encerra o Worker e limpa a instância
+  terminate() {
+    this.worker.terminate();
+    instance = null;
+  }
+}
+🚀 Utilizando o Worker na aplicação:
+Criando uma instância única:
+javascript
+Copiar
+Editar
+const worker = TimerWorkerManager.getInstance();
+Recebendo dados do Worker:
+javascript
+Copiar
+Editar
+worker.onmessage((e) => {
+  console.log('Mensagem do Worker:', e.data);
+});
+Enviando dados para o Worker (por exemplo, dentro de um useEffect no React):
+javascript
+Copiar
+Editar
+useEffect(() => {
+  worker.postMessage({ comando: 'start', tempo: 10 });
+}, []);
+📌 Resumo do Funcionamento:
+O Worker roda isolado, executando tarefas como cronômetro, contador ou cálculos.
+
+A comunicação acontece por meio de mensagens com postMessage() (enviar) e onmessage (receber).
+
+A classe TimerWorkerManager garante que só exista uma instância ativa, evitando que múltiplos Workers sejam criados sem necessidade, economizando recursos.
+
+O Worker não acessa diretamente o estado (state) do React ou o DOM, mas recebe dados por mensagem e envia respostas da mesma forma.

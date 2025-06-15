@@ -8,7 +8,7 @@ import { useTaskContext } from '../../contexts/TaskContent/useTaskContext';
 import { getNextCycle } from '../../util/getNextCycle';
 import { getNextCycleType } from '../../util/getNextCycleType';
 import { TaskActionTypes } from '../../contexts/TaskContent/taskActions';
-//import { formatSecondsToMinutes } from '../../util/formatSecondsToMinutes';
+import { Tips } from '../Tips';
 
 export function MainForm() {
   const { state, dispatch } = useTaskContext();
@@ -54,28 +54,14 @@ export function MainForm() {
   }
 
   function handleInterruptTask(
-    //Utilizei esse preventDefault para nao deixar enviar o formulario, caso o
+    //Utilizei esse preventDefault para nao deixar enviar o formulário, caso o
     //React confunda os botoes
     //Para resolver, poderia em vez de usar o if ternário... e então colocar dois &&
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   ) {
     e.preventDefault();
 
-    // setState(prevState => {
-    //   return {
-    //     ...prevState,
-    //     activeTask: null,
-    //     secondsRemaining: 0,
-    //     formattedSecondsRemaining: '00:00',
-    //     tasks: prevState.tasks.map(task => {
-    //       //Se o primeiro elemento existir e o segundo for verdadeiro
-    //       if (prevState.activeTask && prevState.activeTask.id === task.id) {
-    //         return { ...task, interruptDate: Date.now() };
-    //       }
-    //       return task;
-    //     }),
-    //   };
-    // });
+    dispatch({ type: TaskActionTypes.INTERRUPT_TASK });
   }
 
   return (
@@ -92,7 +78,7 @@ export function MainForm() {
       </div>
 
       <div className='formRow'>
-        <p>Lorem ipsum dolor sit amet.</p>
+        <Tips />
       </div>
 
       {/*Caso nao haja cyclos, nao apresentara esta div */}
