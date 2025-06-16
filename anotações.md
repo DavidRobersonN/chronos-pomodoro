@@ -77,7 +77,7 @@ function minhaFuncao() {
 >Comando para limpar todas alterações feitas apos o ultimo commit git reset
   --hard
 
-# Anotações
+# Anotações Sobre React
 
  O arquivo Principal que é chamado para renderizar a pagina, é o index.html,
 neste exercicio, nossa app sera single page, ou seja apenas com uma pagina.
@@ -179,7 +179,7 @@ ação que foi passado
 
 
 # 🧠 Resumo Aula 72 — Web Workers
-✅ O que são Web Workers?
+✅ O que são **Web Workers**?
 Web Workers são scripts que rodam em segundo plano no navegador, em uma thread separada da thread principal (que cuida da interface gráfica e eventos do usuário).
 
 Eles permitem executar tarefas pesadas (como cálculos, loops, timers) sem travar ou bloquear a interface da aplicação.
@@ -204,9 +204,8 @@ O Worker possui seu próprio contexto e não tem acesso direto ao DOM, mas pode 
 Criamos o arquivo TimerWorkerManager.ts, responsável por gerenciar o Worker usando o padrão de projeto Singleton, ou seja, garantindo que exista apenas uma única instância do Worker ativa no sistema.
 
 🔥 Código da classe:
-javascript
-Copiar
-Editar
+~~~javascript
+
 let instance: TimerWorkerManager | null = null;
 
 export class TimerWorkerManager {
@@ -241,30 +240,31 @@ export class TimerWorkerManager {
     instance = null;
   }
 }
+~~~
+
 🚀 Utilizando o Worker na aplicação:
 Criando uma instância única:
-javascript
-Copiar
-Editar
+~~~~javascript
 const worker = TimerWorkerManager.getInstance();
+~~~~
 Recebendo dados do Worker:
-javascript
-Copiar
-Editar
+~~~~javascript
+
 worker.onmessage((e) => {
   console.log('Mensagem do Worker:', e.data);
 });
+~~~~
 Enviando dados para o Worker (por exemplo, dentro de um useEffect no React):
-javascript
-Copiar
-Editar
+~~~~javascript
+
 useEffect(() => {
   worker.postMessage({ comando: 'start', tempo: 10 });
 }, []);
+~~~~
 📌 Resumo do Funcionamento:
 O Worker roda isolado, executando tarefas como cronômetro, contador ou cálculos.
 
-A comunicação acontece por meio de mensagens com postMessage() (enviar) e onmessage (receber).
+A comunicação acontece por meio de mensagens com **postMessage()** (enviar) e **onmessage** (receber).
 
 A classe TimerWorkerManager garante que só exista uma instância ativa, evitando que múltiplos Workers sejam criados sem necessidade, economizando recursos.
 
