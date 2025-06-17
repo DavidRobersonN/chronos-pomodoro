@@ -241,26 +241,6 @@ export class TimerWorkerManager {
   }
 }
 ~~~
-
-🚀 Utilizando o Worker na aplicação:
-Criando uma instância única:
-~~~~javascript
-const worker = TimerWorkerManager.getInstance();
-~~~~
-Recebendo dados do Worker:
-~~~~javascript
-
-worker.onmessage((e) => {
-  console.log('Mensagem do Worker:', e.data);
-});
-~~~~
-Enviando dados para o Worker (por exemplo, dentro de um useEffect no React):
-~~~~javascript
-
-useEffect(() => {
-  worker.postMessage({ comando: 'start', tempo: 10 });
-}, []);
-~~~~
 📌 Resumo do Funcionamento:
 O Worker roda isolado, executando tarefas como cronômetro, contador ou cálculos.
 
@@ -269,3 +249,25 @@ A comunicação acontece por meio de mensagens com **postMessage()** (enviar) e 
 A classe TimerWorkerManager garante que só exista uma instância ativa, evitando que múltiplos Workers sejam criados sem necessidade, economizando recursos.
 
 O Worker não acessa diretamente o estado (state) do React ou o DOM, mas recebe dados por mensagem e envia respostas da mesma forma.
+
+# Aula 72 **Atualizando o contador a cada segundo no estado e na pegina**
+📝 Resumo da Aula — Context API + Reducer + Web Worker (Contagem Regressiva)
+Foi criado um Web Worker (timerWorker) para executar a contagem regressiva em uma thread separada, sem travar a interface (UI).
+
+No Context API (TaskContextProvider), usamos o useReducer para controlar o estado global da aplicação.
+
+Foram criadas duas actions principais no reducer:
+
+COUNT_DOWN → Atualiza o tempo restante da tarefa.
+
+COMPLETE_TASK → Marca a tarefa como concluída quando o tempo chega a zero.
+
+O Web Worker envia os segundos restantes (countDownSeconds) para o Context, que então:
+
+Usa o dispatch para enviar uma action (COUNT_DOWN).
+
+O reducer atualiza o estado central da tarefa com o novo tempo.
+
+A função formatedSecondsToMinutes converte os segundos em minutos e segundos formatados, prontos para exibir na interface.
+
+Todo o controle da contagem e finalização da tarefa fica centralizado no Context + Reducer, deixando os componentes mais limpos, reativos e desacoplados da lógica do timer.
