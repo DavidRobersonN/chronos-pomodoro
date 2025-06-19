@@ -10,6 +10,8 @@ import { getNextCycleType } from '../../util/getNextCycleType';
 import { TaskActionTypes } from '../../contexts/TaskContent/taskActions';
 import { Tips } from '../Tips';
 
+import { showMessage } from '../../adapters/showMessage';
+
 export function MainForm() {
   const { state, dispatch } = useTaskContext();
   const taskNameInput = useRef<HTMLInputElement>(null);
@@ -25,6 +27,7 @@ export function MainForm() {
   //Capturando o evento de submeter o formulário
   function handleCreateNewTask(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    showMessage.dismiss();
 
     //Se o campo input for vazio null... return
     if (taskNameInput.current === null) return;
@@ -36,7 +39,7 @@ export function MainForm() {
 
     // Caso o input for vazio, abrira um alerta
     if (!taskName) {
-      alert('digite o nome da tarefa');
+      showMessage.warn('digite o nome da tarefa');
       return;
     }
     //Se tudo bem, Essa sera a nova task que sera criada
@@ -51,6 +54,7 @@ export function MainForm() {
     };
 
     dispatch({ type: TaskActionTypes.START_TASK, payload: newTask });
+    showMessage.success('Tarefa Iniciada');
   }
 
   function handleInterruptTask(
@@ -59,9 +63,11 @@ export function MainForm() {
     //Para resolver, poderia em vez de usar o if ternário... e então colocar dois &&
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   ) {
+    showMessage.dismiss();
     e.preventDefault();
 
     dispatch({ type: TaskActionTypes.INTERRUPT_TASK });
+    showMessage.error('Tarefa interrompida!');
   }
 
   return (
