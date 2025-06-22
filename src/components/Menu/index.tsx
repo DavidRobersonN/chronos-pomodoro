@@ -7,6 +7,7 @@ import {
 } from 'lucide-react'; // Lucide, biblioteca de ícones
 import styles from './styles.module.css';
 import { useState, useEffect } from 'react';
+import { RouterLink } from '../RouterLink';
 
 // declarando que posso usar apenas um dos dois tipos para o meu tema
 type AvailableThemes = 'dark' | 'light';
@@ -46,31 +47,31 @@ export function Menu() {
 
   return (
     <nav className={styles.Menu}>
-      <a
+      <RouterLink
         className={styles.menuLink}
-        href='#'
+        href='/'
         aria-label='Ir para Home'
         title='Ir para Home'
       >
         <HouseIcon />
-      </a>
-      <a
+      </RouterLink>
+      <RouterLink
         className={styles.menuLink}
-        href='#'
+        href='/history/'
         aria-label='Ver Histórico'
         title='Ver Histórico'
       >
         <HistoryIcon />
-      </a>
-      <a
+      </RouterLink>
+      <RouterLink
         className={styles.menuLink}
-        href='#'
+        href='/settings/'
         aria-label='Configurações'
         title='Configurações'
       >
         <SettingsIcon />
-      </a>
-      <a
+      </RouterLink>
+      <RouterLink
         className={styles.menuLink}
         href='#'
         aria-label='Mudar Tema'
@@ -79,7 +80,7 @@ export function Menu() {
       >
         {/* escolhendo qual ícone vai aparecer, dependendo da chave que for passado, dark ou light */}
         {nextThemeIcon[theme]}
-      </a>
+      </RouterLink>
     </nav>
   );
 }
