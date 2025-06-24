@@ -5,13 +5,40 @@ import { taskReducer } from './taskReducer';
 import { TimerWorkerManager } from '../../workers/TimerWorkerManage';
 import { TaskActionTypes } from './taskActions';
 import { loadBeep } from '../../util/loadBeep';
+import { TaskStateModel } from '../../models/TaskStateModel';
 
 type TaskContextProviderProps = {
   children: React.ReactNode;
 };
 
+// Cria um componente Provider para compartilhar o estado das tasks com toda a aplicação
 export function TaskContextProvider({ children }: TaskContextProviderProps) {
-  const [state, dispatch] = useReducer(taskReducer, initialTaskState);
+  // useReducer gerencia o estado das tasks. Na inicialização, ele executa a função de terceiro argumento
+  const [state, dispatch] = useReducer(
+    taskReducer, // Função reducer que define como o estado é atualizado
+    initialTaskState, // Estado inicial caso não tenha nada salvo
+    () => {
+      // Função de inicialização, executada apenas na primeira renderização
+
+      // Tenta buscar um estado salvo no localStorage
+      const storeState = localStorage.getItem('state');
+
+      // Se não encontrar nada no localStorage, retorna o estado inicial padrão
+      if (storeState === null) return initialTaskState;
+
+      // Se encontrou, faz o parse da string JSON para transformar em objeto
+      const parsedStoreState = JSON.parse(storeState) as TaskStateModel;
+
+      // Retorna o estado recuperado, mas sempre resetando a task ativa e o cronômetro,
+      // pois não faz sentido manter uma contagem ativa após recarregar a página
+      return {
+        ...parsedStoreState,
+        activeTask: null,
+        secondsRemaining: 0,
+        formattedSecondsRemaining: '00:00',
+      };
+    },
+  );
 
   // Criando uma referência para guardar o áudio gerado pela função loadBeep()
   // Informamos ao useRef que o tipo será o retorno da função loadBeep
@@ -43,6 +70,10 @@ export function TaskContextProvider({ children }: TaskContextProviderProps) {
 
   //Toda vez que o estado atualiza, o useEffect e chamado
   useEffect(() => {
+    //Salva o estado atual no localStorage do navegador, convertendo o objeto
+    //  'state' para uma string JSON
+    localStorage.setItem('state', JSON.stringify(state));
+
     if (!state.activeTask) {
       worker.terminate();
     }

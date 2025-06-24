@@ -1,0 +1,57 @@
+/* === Estilização dos botões dentro do container buttonContainer === */
+.buttonContainer button {
+  min-width: auto; /* Remove o tamanho mínimo padrão do botão */
+  margin: 0; /* Remove qualquer margem externa do botão */
+  padding: 1rem; /* Define um espaçamento interno (padding) de 1rem ao redor do conteúdo do botão */
+}
+
+/* === Estilização dos ícones (SVG) dentro dos botões === */
+.buttonContainer button svg {
+  width: 2rem; /* Define a largura dos ícones SVG para 2rem */
+  height: 2rem; /* Define a altura dos ícones SVG para 2rem */
+}
+
+/* === Container que torna a tabela responsiva === */
+.responsiveTable {
+  overflow-x: auto; /* Adiciona rolagem horizontal caso a tabela ultrapasse a largura da tela */
+  border-radius: 0.8rem; /* Arredonda os cantos do container da tabela */
+}
+
+/* === Estilo da tabela dentro do container responsivo === */
+.responsiveTable table {
+  width: 100%; /* Faz a tabela ocupar 100% da largura do container */
+  min-width: 64rem; /* Garante que a tabela tenha no mínimo 64rem de largura (ativa a rolagem se for menor) */
+  font-size: 1.6rem; /* Define o tamanho da fonte para 1.6rem */
+  border-collapse: collapse; /* Remove os espaços entre as bordas das células da tabela */
+}
+
+/* === Estilo do cabeçalho da tabela (th) === */
+.responsiveTable th {
+  background-color: var(
+    --gray-600
+  ); /* Define a cor de fundo dos cabeçalhos da tabela usando uma variável CSS */
+}
+
+/* === Estilo das células de dados da tabela (td) === */
+.responsiveTable td {
+  background-color: var(
+    --gray-800
+  ); /* Define a cor de fundo das células de dados usando uma variável CSS */
+}
+
+/* === Estilo compartilhado para cabeçalhos (th) e células de dados (td) === */
+.responsiveTable th,
+.responsiveTable td {
+  border-bottom: 0.2rem solid var(--gray-700); /* Cria uma linha na parte inferior de cada célula */
+  text-align: left; /* Alinha o texto à esquerda */
+  padding: 1.6rem; /* Espaçamento interno de 1.6rem dentro das células */
+}
+
+.thSort {
+  cursor: pointer;
+  transition: all 0.1s ease-in-out;
+}
+
+.thSort:hover {
+  filter: brightness(80%);
+}
