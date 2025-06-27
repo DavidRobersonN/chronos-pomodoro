@@ -1,0 +1,24 @@
+.container {
+  display: flex; /* Usa flexbox para alinhar os elementos */
+  flex-direction: column; /* Organiza os elementos na vertical (coluna) */
+  flex: 1; /* Ocupa todo o espaço disponível */
+  align-items: center; /* Centraliza os itens no eixo horizontal */
+  justify-content: center; /* Centraliza os itens no eixo vertical */
+  gap: 1.6rem; /* Espaçamento entre os elementos filhos */
+  text-align: center; /* Centraliza o texto dentro do container */
+}
+
+.buttonsContainer {
+  display: flex; /* Flexbox para alinhar os botões lado a lado */
+  gap: 1.6rem; /* Espaçamento horizontal entre os botões */
+}
+
+.buttonsContainer button {
+  min-width: auto; /* O botão terá largura mínima automática */
+  margin: 0; /* Remove qualquer margem padrão dos botões */
+}
+
+.buttonsContainer svg {
+  width: 1.6rem; /* Largura do ícone SVG dentro do botão */
+  height: 1.6rem; /* Altura do ícone SVG dentro do botão */
+}
