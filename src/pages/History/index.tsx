@@ -14,6 +14,10 @@ import { TaskActionTypes } from '../../contexts/TaskContent/taskActions';
 import { showMessage } from '../../adapters/showMessage';
 
 export function History() {
+  useEffect(() => {
+    document.title = 'Histórico de Tarefas - HISTÓRICO';
+  }, []);
+
   // Controla a confirmação do usuário para limpar o histórico
   const [confirmationClearHistory, setConfirmationClearHistory] =
     useState(false);

@@ -4,12 +4,16 @@ import { DefaultButton } from '../../components/DefaultButton';
 import { DefaultInput } from '../../components/DefaultInput';
 import { Heading } from '../../components/Heading';
 import { MainTemplate } from '../../templates/MainTemplate';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { useTaskContext } from '../../contexts/TaskContent/useTaskContext';
 import { showMessage } from '../../adapters/showMessage';
 import { TaskActionTypes } from '../../contexts/TaskContent/taskActions';
 
 export function Settings() {
+  useEffect(() => {
+    document.title = 'Configurações - Settings';
+  }, []);
+
   const { state, dispatch } = useTaskContext();
 
   const workTimeInput = useRef<HTMLInputElement>(null);
